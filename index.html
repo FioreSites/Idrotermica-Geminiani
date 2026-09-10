@@ -79,7 +79,7 @@
 					</div>
 				</div>
 				
-				<div class="container about-container">
+				<div class="container about-container" id="about-container">
 					<div class="title">
 						<span class="section-tag">La nostra storia</span>
 						<h2>Una storia costruita sulla fiducia</h2>
@@ -94,7 +94,7 @@
 
 			<!-- SERVIZI SECTION -->
 			<section id="services">
-				<div class="stats-div">
+				<div class="stats-div" id="stats">
 					<div class="stats-banner">
 						<div class="stat-card">
 							<span class="stat-number">60+</span>
@@ -261,8 +261,27 @@
 					</div>
 				</div>
 			</footer>
+			<div class="chiama">
+				<a href="tel:+390546622886" class="btn-chiama"><img src="./img/telefono.png" alt="chiama ora"></a>
+			</div>
 		</main>
 		<script>
+			const sezioni = document.querySelectorAll("#about-container, #stats, #services, #contacts");
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("visibile");
+						observer.unobserve(entry.target);
+					}
+				});
+			}, {
+				threshold: 0.2
+			});
+
+			sezioni.forEach(sezione => {
+				observer.observe(sezione);
+			});
 			document.addEventListener('DOMContentLoaded', () => {
 				const openBtn = document.getElementById('hamburger-open');
 				const closeBtn = document.getElementById('hamburger-close');
@@ -305,6 +324,21 @@
 				setTimeout(() => {
 					piva.textContent = testoOriginale;
 				}, 1500);
+			});
+			const btn = document.querySelector('.chiama');
+
+			window.addEventListener('scroll', () => {
+				const scrollTop = window.scrollY;
+				const windowHeight = window.innerHeight;
+				const documentHeight = document.documentElement.scrollHeight;
+
+				const isAtBottom = scrollTop + windowHeight >= documentHeight - 10;
+
+				if (scrollTop > 0 && !isAtBottom) {
+					btn.classList.add('btn-visible');
+				} else {
+					btn.classList.remove('btn-visible');
+				}
 			});
 		</script>
 	</body>
